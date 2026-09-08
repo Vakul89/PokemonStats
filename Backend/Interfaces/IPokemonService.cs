@@ -1,6 +1,6 @@
-using API.Models;
+using Backend.Models;
 
-namespace API.Interfaces
+namespace Backend.Interfaces
 {
     public interface IPokemonService
     {

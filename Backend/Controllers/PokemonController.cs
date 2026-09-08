@@ -1,10 +1,9 @@
-using API.Helpers;
-using API.Interfaces;
-using API.Models;
-using API.Services;
+using Backend.Helpers;
+using Backend.Interfaces;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace Backend.Controllers
 {
     public class PokemonController(IPokemonService pokemonService, PokemonBattleEngine battleEngine) : Controller
     {
