@@ -1,5 +1,5 @@
-using API.Interfaces;
-using API.Services;
+using Backend.Interfaces;
+using Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<IPokemonService, PokemonService>();
-builder.Services.AddSingleton<API.Helpers.PokemonBattleEngine>();
+builder.Services.AddSingleton<Backend.Helpers.PokemonBattleEngine>();
 
 var app = builder.Build();
 

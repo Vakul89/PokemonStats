@@ -1,8 +1,7 @@
-using API.Interfaces;
-using API.Models;
-using System.Text.Json.Serialization;
+using Backend.Interfaces;
+using Backend.Models;
 
-namespace API.Services
+namespace Backend.Services
 {
     public class PokemonService : IPokemonService
     {

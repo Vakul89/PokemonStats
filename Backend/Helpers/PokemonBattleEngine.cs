@@ -1,6 +1,6 @@
-using API.Models;
+using Backend.Models;
 
-namespace API.Helpers
+namespace Backend.Helpers
 {
     public class PokemonBattleEngine
     {
