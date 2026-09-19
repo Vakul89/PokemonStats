@@ -1,4 +1,5 @@
 using Backend.Interfaces;
+using Backend.Middleware;
 using Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddSingleton<Backend.Helpers.PokemonBattleEngine>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors(policy => policy
           .AllowAnyHeader()

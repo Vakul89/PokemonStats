@@ -1,6 +1,7 @@
 using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Models;
+using Backend.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -10,23 +11,16 @@ namespace Backend.Controllers
         private readonly IPokemonService _pokemonService = pokemonService;
         private readonly PokemonBattleEngine _battleEngine = battleEngine;
 
-        private static readonly string[] ValidaSortBy = ["id", "name", "wins", "losses", "ties"];
-
-        private static readonly string[] ValidSortDirection = ["asc", "desc"];
-
         [HttpGet("pokemon/tournament/statistics")]
         public async Task<IActionResult> GetPokemons([FromQuery] string sortBy, [FromQuery] string sortDirection)
         {
-            if (string.IsNullOrEmpty(sortBy))
+            if (string.IsNullOrWhiteSpace(sortBy))
                 return BadRequest("sortBy parameter is required.");
 
-            else if (string.IsNullOrEmpty(sortDirection))
-                return BadRequest("sortDirection parameter is required.");
-
-            else if (!ValidaSortBy.Contains(sortBy.ToLower()))
+            if (!PokemonQueryValidator.IsValidSortBy(sortBy))
                 return BadRequest("sortBy parameter is invalid.");
 
-            else if (!ValidSortDirection.Contains(sortDirection.ToLower()))
+            if (!PokemonQueryValidator.IsValidSortDirection(sortDirection))
                 return BadRequest("sortDirection parameter is invalid.");
 
             var pokemons = await _pokemonService.GetRandomPokemonAsync(16); // Fetch 16 random Pokémon
