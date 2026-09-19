@@ -23,7 +23,7 @@ public class ErrorHandlingMiddleware
             if (context.Response.StatusCode >= 400 && context.Response.ContentLength == null)
             {
                 var status = context.Response.StatusCode;
-                var problem = new ProblemDetails
+                var error = new ErrorDetails
                 {
                     Status = status,
                     Title = GetDefaultTitle(status),
@@ -31,7 +31,7 @@ public class ErrorHandlingMiddleware
                 };
 
                 context.Response.ContentType = "application/problem+json";
-                var json = JsonSerializer.Serialize(problem);
+                var json = JsonSerializer.Serialize(error);
                 await context.Response.WriteAsync(json);
             }
         }
@@ -53,7 +53,7 @@ public class ErrorHandlingMiddleware
             _ => ((int)HttpStatusCode.InternalServerError, "An unexpected error occurred")
         };
 
-        var problem = new ProblemDetails
+        var error = new ErrorDetails
         {
             Status = statusCode,
             Title = title,
@@ -65,7 +65,7 @@ public class ErrorHandlingMiddleware
         context.Response.ContentType = "application/problem+json";
 
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        await context.Response.WriteAsync(JsonSerializer.Serialize(problem, options));
+        await context.Response.WriteAsync(JsonSerializer.Serialize(error, options));
     }
 
     private static string GetDefaultTitle(int statusCode) => statusCode switch
@@ -80,7 +80,7 @@ public class ErrorHandlingMiddleware
 }
 
 // Minimal ProblemDetails implementation to avoid extra references when targeting minimal APIs
-internal class ProblemDetails
+internal class ErrorDetails
 {
     public int? Status { get; set; }
     public string? Title { get; set; }
