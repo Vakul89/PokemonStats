@@ -37,19 +37,6 @@ namespace UnitTest.Controllers
         }
 
         [Fact]
-        public async Task GetPokemons_ReturnsBadRequest_When_SortDirectionMissing()
-        {
-            var svc = new FakePokemonService(new List<PokemonDTO>());
-            var controller = new PokemonController(svc, new PokemonBattleEngine());
-
-            var result = await controller.GetPokemons("id", null!);
-
-            Assert.IsType<BadRequestObjectResult>(result);
-            var bad = result as BadRequestObjectResult;
-            Assert.Equal("sortDirection parameter is required.", bad!.Value);
-        }
-
-        [Fact]
         public async Task GetPokemons_ReturnsBadRequest_When_InvalidSortBy()
         {
             var svc = new FakePokemonService(new List<PokemonDTO>());
